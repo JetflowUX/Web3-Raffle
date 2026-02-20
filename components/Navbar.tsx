@@ -21,41 +21,46 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 px-4 py-3 md:px-6 md:py-4">
+    <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-xl">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 px-4 py-3 md:px-6">
         {/* Logo */}
-        <Link href="/" className="flex min-w-0 items-center gap-2 flex-shrink-0" onClick={() => setMobileMenuOpen(false)}>
+        <Link href="/" className="flex min-w-0 items-center gap-2.5 flex-shrink-0" onClick={() => setMobileMenuOpen(false)}>
           <motion.div
             initial={{ rotate: -12, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-primary/20"
+            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary shadow-lg"
           >
-            <Zap className="h-5 w-5 text-primary" />
+            <Zap className="h-5 w-5 text-white" />
           </motion.div>
           <div className="hidden sm:block">
-            <p className="font-display text-base md:text-lg font-semibold text-text">ChainRaffle</p>
-            <p className="text-xs text-muted">Premium Web3 draws</p>
+            <p className="font-display text-base font-bold text-text">ChainRaffle</p>
+            <p className="text-[10px] text-muted uppercase tracking-wider">Web3 Raffles</p>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-6 text-sm text-muted md:flex">
+        <nav className="hidden items-center gap-1 md:flex">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="transition hover:text-text">
+            <Link 
+              key={item.href} 
+              href={item.href} 
+              className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition hover:bg-card/50 hover:text-text"
+            >
               {item.label}
             </Link>
           ))}
         </nav>
 
         {/* Desktop Actions */}
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
           <Button
-            variant={useMock ? "secondary" : "outline"}
+            variant={useMock ? "default" : "ghost"}
             size="sm"
             onClick={toggleMock}
+            className={useMock ? "bg-accent hover:bg-accent/90" : ""}
           >
-            {useMock ? "Mock On" : "Mock Off"}
+            {useMock ? "🎮 Mock" : "⛓️ Live"}
           </Button>
           <WalletButton />
         </div>
@@ -111,7 +116,7 @@ export function Navbar() {
             </div>
           </div>
         </motion.div>
-      )}}
+      )}
     </header>
   );
 }

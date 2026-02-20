@@ -19,7 +19,7 @@ export default function MyTicketsPage() {
       toast.loading("Processing claim...");
       // Simulate claim processing
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      toast.success(`Reward claimed for Raffle #${raffleId}!");
+      toast.success(`Reward claimed for Raffle #${raffleId}!`);
     } catch (error) {
       toast.error("Failed to claim reward. Please try again.");
     }

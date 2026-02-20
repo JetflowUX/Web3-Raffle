@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Sora, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { Navbar } from "../components/Navbar";
-import { Footer } from "../components/Footer";
+import { Sidebar } from "../components/Sidebar";
+import { TopBar } from "../components/TopBar";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
 const space = Space_Grotesk({ subsets: ["latin"], variable: "--font-space", display: "swap" });
@@ -27,10 +27,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={`${sora.variable} ${space.variable} ${mono.variable} bg-background text-text antialiased`}
       >
         <Providers>
-          <div className="min-h-screen bg-background text-text">
-            <Navbar />
-            <main className="relative overflow-hidden">{children}</main>
-            <Footer />
+          <div className="flex min-h-screen bg-background">
+            <Sidebar />
+            <div className="ml-64 flex-1">
+              <TopBar />
+              <main className="relative min-h-[calc(100vh-4rem)] overflow-hidden p-6">{children}</main>
+            </div>
           </div>
         </Providers>
       </body>

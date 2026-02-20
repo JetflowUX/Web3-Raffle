@@ -22,7 +22,7 @@ export function WalletButton({ isMobile = false }: WalletButtonProps) {
 
         if (!connected) {
           return (
-            <Button onClick={openConnectModal} size={isMobile ? "default" : "sm"} className={isMobile ? "w-full" : ""}>
+            <Button onClick={openConnectModal} size={isMobile ? "md" : "sm"} className={isMobile ? "w-full" : ""}>
               <Wallet2 className="h-4 w-4" />
               Connect Wallet
             </Button>
@@ -41,7 +41,7 @@ export function WalletButton({ isMobile = false }: WalletButtonProps) {
             <div className="flex flex-col gap-2 w-full">
               <Button 
                 variant="secondary" 
-                size="default" 
+                size="md" 
                 onClick={openChainModal}
                 className="w-full justify-between"
               >
@@ -53,7 +53,7 @@ export function WalletButton({ isMobile = false }: WalletButtonProps) {
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 
-                  size="default" 
+                  size="md" 
                   onClick={openAccountModal}
                   className="flex-1 justify-start text-xs"
                 >
@@ -61,7 +61,7 @@ export function WalletButton({ isMobile = false }: WalletButtonProps) {
                 </Button>
                 <Button 
                   variant="ghost" 
-                  size="default" 
+                  size="md" 
                   onClick={copyAddress}
                   className="px-2"
                 >
@@ -69,7 +69,7 @@ export function WalletButton({ isMobile = false }: WalletButtonProps) {
                 </Button>
                 <Button 
                   variant="ghost" 
-                  size="default" 
+                  size="md" 
                   onClick={() => disconnect()}
                   className="px-2"
                 >

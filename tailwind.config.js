@@ -12,14 +12,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#0B0F1A",
-        primary: "#6366F1",
-        secondary: "#8B5CF6",
-        accent: "#22C55E",
-        card: "#111827",
-        border: "#1F2937",
-        text: "#E5E7EB",
-        muted: "#9CA3AF"
+        background: "#0f212e",
+        primary: "#00e701",
+        secondary: "#1a2c38",
+        accent: "#2f4553",
+        card: "#213743",
+        border: "#1a2c38",
+        text: "#ffffff",
+        muted: "#b1bad3",
+        "text-muted": "#b1bad3"
       },
       fontFamily: {
         sans: ["var(--font-sora)", "system-ui", "sans-serif"],
@@ -27,8 +28,8 @@ export default {
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"]
       },
       boxShadow: {
-        glow: "0 0 32px rgba(99, 102, 241, 0.25)",
-        card: "0 24px 80px rgba(11, 15, 26, 0.55)"
+        glow: "0 0 32px rgba(0, 231, 1, 0.25)",
+        card: "0 24px 80px rgba(15, 33, 46, 0.55)"
       },
       keyframes: {
         shimmer: {

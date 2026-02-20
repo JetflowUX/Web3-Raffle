@@ -49,8 +49,12 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" disabled={raffle.status !== "Active"}>
-          Enter
+        <Button 
+          className="w-full bg-primary text-black hover:bg-primary/90 font-semibold" 
+          size="md"
+          disabled={raffle.status !== "Active"}
+        >
+          Enter Raffle
         </Button>
       </DialogTrigger>
       <DialogContent>
