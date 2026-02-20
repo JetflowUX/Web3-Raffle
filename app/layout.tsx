@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Sidebar />
             <div className="ml-64 flex-1">
               <TopBar />
-              <main className="relative min-h-[calc(100vh-4rem)] overflow-hidden p-6">{children}</main>
+              <main className="relative min-h-[calc(100vh-4rem)] p-8">{children}</main>
             </div>
           </div>
         </Providers>

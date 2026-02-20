@@ -1,1 +1,6 @@
-{}
+{
+  "/my-tickets/page": "app/my-tickets/page.js",
+  "/winners/page": "app/winners/page.js",
+  "/create/page": "app/create/page.js",
+  "/page": "app/page.js"
+}

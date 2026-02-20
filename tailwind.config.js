@@ -12,12 +12,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#0f212e",
-        primary: "#00e701",
-        secondary: "#1a2c38",
+        background: "#1a2c38",
+        primary: "#1fff20",
+        secondary: "#213743",
         accent: "#2f4553",
         card: "#213743",
-        border: "#1a2c38",
+        border: "#2f4553",
         text: "#ffffff",
         muted: "#b1bad3",
         "text-muted": "#b1bad3"

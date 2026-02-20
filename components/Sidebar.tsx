@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Ticket, Trophy, Plus, Activity } from "lucide-react";
+import { Home, Ticket, Trophy, Plus, Activity, Sparkles } from "lucide-react";
 
 const navItems = [
   {
@@ -31,15 +31,18 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-64 bg-[#1a2c38] border-r border-[#2f4553] overflow-y-auto">
+    <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r border-border bg-secondary overflow-y-auto">
       <div className="flex h-full flex-col">
-        {/* Logo */}
-        <div className="flex h-16 items-center border-b border-[#2f4553] px-6">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+        {/* Logo section */}
+        <div className="border-b border-border px-5 py-5">
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary group-hover:scale-105 transition-transform">
               <Activity className="h-5 w-5 text-black" />
             </div>
-            <span className="text-xl font-bold text-white">ChainRaffle</span>
+            <div>
+              <div className="text-base font-bold text-white">ChainRaffle</div>
+              <div className="text-xs text-muted">Web3 Raffles</div>
+            </div>
           </Link>
         </div>
 
@@ -55,22 +58,21 @@ export function Sidebar() {
                 href={item.href}
                 className={`sidebar-nav ${isActive ? "active" : ""}`}
               >
-                <Icon className="h-5 w-5" />
+                <Icon className="h-4 w-4" />
                 <span>{item.name}</span>
               </Link>
             );
           })}
         </nav>
 
-        {/* Footer Info */}
-        <div className="border-t border-[#2f4553] p-4">
-          <div className="rounded-lg bg-[#0f212e] p-3">
-            <p className="text-xs text-text-muted">
-              Powered by Web3
-            </p>
-            <p className="mt-1 text-xs font-semibold text-primary">
-              Decentralized Raffles
-            </p>
+        {/* Footer section */}
+        <div className="border-t border-border p-4">
+          <div className="rounded-md bg-accent/50 p-3 space-y-1.5">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-3.5 w-3.5 text-primary" />
+              <p className="text-xs font-medium text-white">Powered by Web3</p>
+            </div>
+            <p className="text-xs text-muted">Decentralized Raffle Protocol</p>
           </div>
         </div>
       </div>

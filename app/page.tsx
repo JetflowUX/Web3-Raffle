@@ -12,43 +12,51 @@ export default function HomePage() {
   const allRaffles = raffles || [];
 
   return (
-    <div className="space-y-8">
-      {/* Trending Section */}
-      {trendingRaffles.length > 0 && (
-        <section>
-          <div className="mb-4 flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-primary" />
-            <h2 className="text-lg font-bold text-white">Trending</h2>
+    <div className="space-y-10">
+      {/* Trending Section - Always render to prevent hydration mismatch */}
+      <section>
+        <div className="mb-5 flex items-center gap-2.5">
+          <TrendingUp className="h-5 w-5 text-primary" />
+          <h2 className="text-xl font-bold text-white">Trending Raffles</h2>
+        </div>
+        {isLoading || trendingRaffles.length === 0 ? (
+          <div className="grid gap-4 md:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="rounded-lg border border-border bg-card p-5 h-32 animate-pulse" />
+            ))}
           </div>
+        ) : (
           <div className="grid gap-4 md:grid-cols-3">
             {trendingRaffles.map((raffle) => (
               <Link
                 key={raffle.id}
                 href={`/raffle/${raffle.id}`}
-                className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-primary/20 to-primary/5 p-4 transition-all hover:from-primary/30 hover:to-primary/10"
+                className="group relative overflow-hidden rounded-lg border border-border bg-card p-5 transition-all hover:border-primary/50 hover:shadow-lg"
               >
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between mb-4">
                   <div>
-                    <p className="text-sm font-medium text-text-muted">Prize Pool</p>
-                    <p className="mt-1 text-2xl font-bold text-white">{raffle.prizePool} ETH</p>
+                    <p className="text-xs font-medium text-muted uppercase tracking-wide">Prize Pool</p>
+                    <p className="mt-1.5 text-2xl font-bold text-white">{raffle.prizePool} <span className="text-lg">ETH</span></p>
                   </div>
-                  <Sparkles className="h-5 w-5 text-primary" />
+                  <div className="rounded-full bg-primary/20 p-2">
+                    <Sparkles className="h-4 w-4 text-primary" />
+                  </div>
                 </div>
-                <div className="mt-3 flex items-center justify-between text-sm">
-                  <span className="text-text-muted">Ticket: {raffle.ticketPrice} ETH</span>
-                  <span className="text-text-muted">{raffle.participants} players</span>
+                <div className="flex items-center justify-between text-sm border-t border-border pt-3">
+                  <span className="text-muted">{raffle.ticketPrice} ETH/ticket</span>
+                  <span className="text-white font-medium">{raffle.participants} players</span>
                 </div>
               </Link>
             ))}
           </div>
-        </section>
-      )}
+        )}
+      </section>
 
       {/* All Raffles Section */}
       <section>
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-white">All Raffles</h2>
-          <Button className="bg-primary text-black hover:bg-primary/90" size="sm" asChild>
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-white">All Raffles</h2>
+          <Button className="bg-primary text-black hover:bg-primary/90 font-semibold" size="sm" asChild>
             <Link href="/create">+ Create Raffle</Link>
           </Button>
         </div>

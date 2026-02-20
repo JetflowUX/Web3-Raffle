@@ -13,81 +13,109 @@
 }
 
 @layer utilities {
-  .bg-stake-dark {
-    background: #0f212e;
+  /* Professional Stake.com-inspired aesthetic */
+  .raffle-card {
+    @apply relative overflow-hidden rounded-lg border border-border bg-card transition-all duration-300 hover:border-primary/50;
   }
 
-  .bg-stake-card {
-    background: #1a2c38;
+  .raffle-card:hover {
+    @apply shadow-xl;
+    transform: translateY(-2px);
+  }
+
+  .raffle-header {
+    @apply relative overflow-hidden rounded-t-lg p-6;
+  }
+
+  .prize-badge {
+    @apply inline-flex items-center gap-1.5 rounded-md bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm;
+  }
+
+  .stat-row {
+    @apply flex items-center justify-between py-2 text-sm;
+  }
+
+  .stat-label {
+    @apply flex items-center gap-2 text-muted;
+  }
+
+  .stat-value {
+    @apply font-semibold text-white;
   }
 
   .glass-card {
-    background: linear-gradient(135deg, rgba(26, 44, 56, 0.95), rgba(26, 44, 56, 0.8));
-    border: 1px solid rgba(47, 69, 83, 0.5);
-    transition: all 0.2s ease;
+    @apply rounded-lg border border-border bg-card backdrop-blur-sm transition-all duration-300;
   }
 
   .glass-card:hover {
-    border-color: rgba(0, 231, 1, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 231, 1, 0.1);
+    @apply border-primary/50 shadow-lg;
   }
 
   .text-gradient {
-    background: linear-gradient(120deg, #00e701, #00a8e8, #00e701);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    @apply bg-gradient-to-r from-primary to-emerald-400 bg-clip-text text-transparent;
   }
 
-  .game-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    aspect-ratio: 1;
+  .btn-primary {
+    @apply w-full rounded-md bg-primary px-4 py-2.5 font-semibold text-black transition-all duration-200 hover:bg-primary/90 active:scale-95;
   }
 
-  .game-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
-    opacity: 0.8;
+  .btn-primary:disabled {
+    @apply bg-primary/40 text-black/50 cursor-not-allowed hover:bg-primary/40;
   }
 
-  .game-card:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 231, 1, 0.2);
+  .btn-secondary {
+    @apply rounded-md border border-border bg-card px-4 py-2.5 font-semibold text-white transition-all duration-200 hover:border-primary/30 hover:bg-accent active:scale-95;
   }
 
   .sidebar-nav {
-    @apply flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-text-muted transition-colors hover:bg-accent hover:text-white;
+    @apply flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-muted transition-all duration-200 hover:bg-accent hover:text-white;
   }
 
   .sidebar-nav.active {
-    @apply bg-primary/10 text-primary;
+    @apply bg-accent text-white;
+  }
+
+  .section-header {
+    @apply mb-6 flex items-center justify-between;
+  }
+
+  .section-title {
+    @apply text-xl font-bold text-white;
+  }
+
+  .section-subtitle {
+    @apply mt-1 text-sm text-muted;
+  }
+
+  /* Animations */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 8px rgba(31, 255, 32, 0.1);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(0, 231, 1, 0.3);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
   }
 }
 
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f212e;
+  background: #1a2c38;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1a2c38;
+  background: #2f4553;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2f4553;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #374151;
+  background: #3d5565;
 }
