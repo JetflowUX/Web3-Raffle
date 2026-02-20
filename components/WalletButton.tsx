@@ -1,13 +1,16 @@
 "use client";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Copy, ExternalLink, Wallet2 } from "lucide-react";
+import { Copy, ExternalLink, LogOut, Wallet2 } from "lucide-react";
 import { toast } from "sonner";
+import { useDisconnect } from "wagmi";
 
 import { Button } from "./ui/button";
 import { formatAddress } from "../lib/utils";
 
 export function WalletButton() {
+  const { disconnect } = useDisconnect();
+
   return (
     <ConnectButton.Custom>
       {({ account, chain, openAccountModal, openChainModal, openConnectModal, mounted }) => {
@@ -35,9 +38,15 @@ export function WalletButton() {
             </Button>
             <Button variant="secondary" size="sm" onClick={openAccountModal}>
               {formatAddress(account?.address)}
+              <span className="hidden text-xs text-background/70 md:inline">
+                {account?.displayBalance}
+              </span>
             </Button>
             <Button variant="ghost" size="sm" onClick={copyAddress}>
               <Copy className="h-4 w-4" />
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => disconnect()}>
+              <LogOut className="h-4 w-4" />
             </Button>
             <a
               href={chain?.blockExplorers?.default?.url}

@@ -2,7 +2,7 @@ import type { Address, WalletClient } from "viem";
 import { createPublicClient, http, parseEther } from "viem";
 import { mainnet, sepolia } from "viem/chains";
 
-import type { Raffle } from "./types";
+import type { Raffle, UserTicketSummary } from "./types";
 import {
   createMockRaffle,
   enterMockRaffle,
@@ -253,12 +253,19 @@ export async function getUserTickets({
 
   try {
     const client = getPublicClient(chainId);
-    return await client.readContract({
+    const results = (await client.readContract({
       address: contractAddress,
       abi: raffleAbi,
       functionName: "getUserTickets",
       args: [address]
-    });
+    })) as any[];
+
+    return results.map((item): UserTicketSummary => ({
+      raffleId: String(item?.raffleId ?? item?.[0] ?? 0n),
+      tickets: Number(item?.tickets ?? item?.[1] ?? 0n),
+      status: statusFromIndex(Number(item?.status ?? item?.[2] ?? 0)),
+      isWinner: Boolean(item?.isWinner ?? item?.[3] ?? false)
+    }));
   } catch {
     return getMockUserTickets(address);
   }

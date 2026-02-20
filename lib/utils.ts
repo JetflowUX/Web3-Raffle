@@ -51,3 +51,9 @@ export function getTimeRemaining(endsAt: number) {
 export function clampNumber(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
+
+export function getExplorerTxUrl(txHash?: string, chainId?: number) {
+  if (!txHash) return "";
+  const base = chainId === 1 ? "https://etherscan.io" : "https://sepolia.etherscan.io";
+  return `${base}/tx/${txHash}`;
+}

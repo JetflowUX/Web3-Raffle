@@ -11,7 +11,7 @@ import { ParticipantsList } from "../../../components/ParticipantsList";
 import { Countdown } from "../../../components/Countdown";
 import { useRaffle } from "../../../hooks/useRaffle";
 import { useEnterRaffle } from "../../../hooks/useEnterRaffle";
-import { clampNumber, formatToken } from "../../../lib/utils";
+import { clampNumber, formatAddress, formatToken } from "../../../lib/utils";
 
 export default function RaffleDetailsPage({ params }: { params: { id: string } }) {
   const { raffleQuery, participantsQuery } = useRaffle(params.id);
@@ -83,7 +83,7 @@ export default function RaffleDetailsPage({ params }: { params: { id: string } }
             <Card className="glass-card">
               <CardContent>
                 <p className="text-xs uppercase tracking-[0.3em] text-muted">Winner</p>
-                <p className="text-lg font-semibold text-text">{raffle.winner}</p>
+                <p className="text-lg font-semibold text-text">{formatAddress(raffle.winner)}</p>
               </CardContent>
             </Card>
           )}

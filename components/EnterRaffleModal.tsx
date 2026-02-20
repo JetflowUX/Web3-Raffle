@@ -3,20 +3,23 @@
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { useChainId } from "wagmi";
 
 import type { Raffle } from "../lib/types";
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { useEnterRaffle } from "../hooks/useEnterRaffle";
-import { clampNumber, formatToken } from "../lib/utils";
+import { clampNumber, formatToken, getExplorerTxUrl } from "../lib/utils";
 import { useWallet } from "../hooks/useWallet";
 
 export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
   const [open, setOpen] = useState(false);
   const [ticketCount, setTicketCount] = useState(1);
+  const [txHash, setTxHash] = useState<string | null>(null);
   const { isConnected } = useWallet();
   const enterMutation = useEnterRaffle();
+  const chainId = useChainId();
 
   const totalCost = useMemo(() => {
     return Number(raffle.ticketPrice) * ticketCount;
@@ -24,18 +27,23 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
 
   const handleSubmit = async () => {
     try {
-      await enterMutation.mutateAsync({
+      const result = await enterMutation.mutateAsync({
         raffleId: raffle.id,
         ticketCount,
         totalCost: totalCost.toString()
       });
+      setTxHash(result?.txHash ?? null);
       toast.success("Transaction submitted.");
       setTicketCount(1);
-      setOpen(false);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Transaction failed.";
       toast.error(message);
     }
+  };
+
+  const resetModal = () => {
+    setTxHash(null);
+    setOpen(false);
   };
 
   return (
@@ -74,20 +82,37 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
           )}
         </div>
 
-        <Button
-          className="mt-6 w-full"
-          onClick={handleSubmit}
-          disabled={!isConnected || enterMutation.isPending}
-        >
-          {enterMutation.isPending ? (
-            <span className="flex items-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Waiting for confirmation
-            </span>
-          ) : (
-            "Confirm Entry"
-          )}
-        </Button>
+        {txHash ? (
+          <div className="mt-6 space-y-3">
+            <p className="text-sm text-accent">Entry submitted successfully.</p>
+            <a
+              href={getExplorerTxUrl(txHash, chainId)}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs text-muted underline"
+            >
+              View on explorer
+            </a>
+            <Button className="w-full" variant="outline" onClick={resetModal}>
+              Done
+            </Button>
+          </div>
+        ) : (
+          <Button
+            className="mt-6 w-full"
+            onClick={handleSubmit}
+            disabled={!isConnected || enterMutation.isPending}
+          >
+            {enterMutation.isPending ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Waiting for confirmation
+              </span>
+            ) : (
+              "Confirm Entry"
+            )}
+          </Button>
+        )}
       </DialogContent>
     </Dialog>
   );
