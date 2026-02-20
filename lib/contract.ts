@@ -153,7 +153,8 @@ function mapRaffle(raw: any): Raffle {
     maxParticipants: Number(maxParticipants),
     endsAt: Number(endTime),
     status: statusFromIndex(Number(status)),
-    winner
+    winner,
+    blockchain: "Ethereum"
   };
 }
 

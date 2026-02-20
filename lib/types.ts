@@ -1,5 +1,7 @@
 export type RaffleStatus = "Active" | "Drawing" | "Completed";
 
+export type Blockchain = "Ethereum" | "Solana" | "Polkadot" | "Cardano" | "Aptos" | "Avalanche";
+
 export interface Raffle {
   id: string;
   prizePool: string;
@@ -9,6 +11,7 @@ export interface Raffle {
   endsAt: number;
   status: RaffleStatus;
   winner?: string | null;
+  blockchain: Blockchain;
 }
 
 export interface WinnerRecord {

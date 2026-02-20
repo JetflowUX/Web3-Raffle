@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Users, Clock, Ticket, Zap } from "lucide-react";
+import { Users, Clock, Ticket, Zap, XCircle } from "lucide-react";
 
 import type { Raffle } from "../lib/types";
 import { EnterRaffleModal } from "./EnterRaffleModal";
 import { Countdown } from "./Countdown";
+import { getBlockchainConfig } from "../lib/blockchainConfig";
 
 const headerGradients = [
   "from-blue-500 via-blue-600 to-blue-700",
@@ -20,15 +21,18 @@ const headerGradients = [
 export function RaffleCard({ raffle }: { raffle: Raffle }) {
   const gradientClass = headerGradients[parseInt(raffle.id) % headerGradients.length];
   const isActive = raffle.status === "Active";
+  const isEnded = raffle.status === "Completed" || Date.now() / 1000 > raffle.endsAt;
+  const blockchainConfig = getBlockchainConfig(raffle.blockchain);
+  const BlockchainIcon = blockchainConfig.icon;
   
   return (
     <Link href={`/raffle/${raffle.id}`}>
       <motion.div 
-        whileHover={{ y: -6, scale: 1.02 }} 
+        whileHover={{ y: isEnded ? -2 : -6, scale: isEnded ? 1.01 : 1.02 }} 
         transition={{ duration: 0.2, ease: "easeOut" }}
         className="group h-full"
       >
-        <div className="raffle-card h-full flex flex-col overflow-hidden shadow-lg">
+        <div className={`raffle-card h-full flex flex-col overflow-hidden shadow-lg ${isEnded ? 'opacity-75' : ''}`}>
           {/* Header with gradient and prize info */}
           <div className={`relative bg-gradient-to-br ${gradientClass} p-6 overflow-hidden`}>
             {/* Animated shine effect */}
@@ -39,7 +43,7 @@ export function RaffleCard({ raffle }: { raffle: Raffle }) {
             <div className="relative z-10 flex items-start justify-between">
               <div className="space-y-1">
                 <p className="text-white/90 text-xs font-medium uppercase tracking-wide">Prize Pool</p>
-                <p className="text-white text-3xl font-bold drop-shadow-lg">{raffle.prizePool} <span className="text-xl">ETH</span></p>
+                <p className="text-white text-3xl font-bold drop-shadow-lg">{raffle.prizePool} <span className="text-xl">{blockchainConfig.currency}</span></p>
               </div>
               {isActive && (
                 <motion.div 
@@ -51,6 +55,16 @@ export function RaffleCard({ raffle }: { raffle: Raffle }) {
                   <span>Live</span>
                 </motion.div>
               )}
+              {isEnded && (
+                <motion.div 
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="px-3 py-1.5 rounded-full bg-red-500/20 border border-red-500/30 backdrop-blur-md flex items-center gap-1.5 text-xs font-semibold text-red-200 shadow-lg"
+                >
+                  <XCircle className="h-3.5 w-3.5" />
+                  <span>Ended</span>
+                </motion.div>
+              )}
             </div>
             {/* Decorative overlays */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
@@ -59,6 +73,24 @@ export function RaffleCard({ raffle }: { raffle: Raffle }) {
 
           {/* Card content */}
           <div className="flex-1 p-5 flex flex-col bg-gradient-to-b from-transparent to-black/10">
+            {/* Blockchain Badge */}
+            <div className="mb-4">
+              <div 
+                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-lg ${blockchainConfig.bgColor} ${blockchainConfig.borderColor} border backdrop-blur-sm`}
+                style={{ 
+                  boxShadow: `0 0 20px ${blockchainConfig.color}20` 
+                }}
+              >
+                <BlockchainIcon 
+                  className="h-4 w-4" 
+                  style={{ color: blockchainConfig.color }} 
+                />
+                <span className="text-xs font-semibold text-white">
+                  {raffle.blockchain}
+                </span>
+              </div>
+            </div>
+
             {/* Stats */}
             <div className="space-y-3 mb-4">
               <div className="stat-row hover:bg-white/5 rounded-md px-2 transition-colors">
@@ -66,7 +98,7 @@ export function RaffleCard({ raffle }: { raffle: Raffle }) {
                   <Ticket className="h-4 w-4 text-primary" />
                   <span>Ticket Price</span>
                 </div>
-                <span className="stat-value">{raffle.ticketPrice} ETH</span>
+                <span className="stat-value">{raffle.ticketPrice} {blockchainConfig.currency}</span>
               </div>
               
               <div className="stat-row hover:bg-white/5 rounded-md px-2 transition-colors">
