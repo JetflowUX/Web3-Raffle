@@ -22,19 +22,19 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-lg">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 md:px-6">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 px-4 py-3 md:px-6 md:py-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+        <Link href="/" className="flex min-w-0 items-center gap-2 flex-shrink-0" onClick={() => setMobileMenuOpen(false)}>
           <motion.div
             initial={{ rotate: -12, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/20"
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-2xl bg-primary/20"
           >
             <Zap className="h-5 w-5 text-primary" />
           </motion.div>
           <div className="hidden sm:block">
-            <p className="font-display text-lg font-semibold text-text">ChainRaffle</p>
+            <p className="font-display text-base md:text-lg font-semibold text-text">ChainRaffle</p>
             <p className="text-xs text-muted">Premium Web3 draws</p>
           </div>
         </Link>
@@ -61,15 +61,7 @@ export function Navbar() {
         </div>
 
         {/* Mobile Actions */}
-        <div className="flex items-center gap-2 md:hidden">
-          <Button
-            variant={useMock ? "secondary" : "outline"}
-            size="sm"
-            onClick={toggleMock}
-            className="hidden xs:inline-flex"
-          >
-            {useMock ? "Mock" : "Real"}
-          </Button>
+        <div className="flex items-center gap-1 md:hidden">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="inline-flex items-center justify-center rounded-lg p-2 text-muted transition hover:text-text"
@@ -89,23 +81,24 @@ export function Navbar() {
           transition={{ duration: 0.2 }}
           className="border-t border-border bg-background/95 backdrop-blur-lg md:hidden"
         >
-          <div className="flex flex-col gap-1 px-4 py-3">
+          <div className="flex flex-col gap-2 px-4 py-4">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-3 py-2 text-sm text-muted transition hover:bg-primary/10 hover:text-text"
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-muted transition hover:bg-primary/10 hover:text-text active:bg-primary/20"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.label}
               </Link>
             ))}
-            <div className="border-t border-border pt-3">
-              <div className="flex gap-2">
+            
+            <div className="border-t border-border my-2 pt-3">
+              <div className="mb-2 flex gap-2">
                 <Button
-                  variant="outline"
+                  variant={useMock ? "secondary" : "outline"}
                   size="sm"
-                  className="flex-1"
+                  className="w-full"
                   onClick={() => {
                     toggleMock();
                     setMobileMenuOpen(false);
@@ -113,14 +106,12 @@ export function Navbar() {
                 >
                   {useMock ? "Mock On" : "Mock Off"}
                 </Button>
-                <div className="flex-1">
-                  <WalletButton />
-                </div>
               </div>
+              <WalletButton isMobile />
             </div>
           </div>
         </motion.div>
-      )}
+      )}}
     </header>
   );
 }
