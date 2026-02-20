@@ -24,57 +24,70 @@ export function RaffleCard({ raffle }: { raffle: Raffle }) {
   return (
     <Link href={`/raffle/${raffle.id}`}>
       <motion.div 
-        whileHover={{ y: -4 }} 
-        transition={{ duration: 0.2 }}
+        whileHover={{ y: -6, scale: 1.02 }} 
+        transition={{ duration: 0.2, ease: "easeOut" }}
         className="group h-full"
       >
-        <div className="raffle-card h-full flex flex-col overflow-hidden">
+        <div className="raffle-card h-full flex flex-col overflow-hidden shadow-lg">
           {/* Header with gradient and prize info */}
-          <div className={`relative bg-gradient-to-br ${gradientClass} p-6`}>
+          <div className={`relative bg-gradient-to-br ${gradientClass} p-6 overflow-hidden`}>
+            {/* Animated shine effect */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shine" />
+            </div>
+            
             <div className="relative z-10 flex items-start justify-between">
               <div className="space-y-1">
                 <p className="text-white/90 text-xs font-medium uppercase tracking-wide">Prize Pool</p>
-                <p className="text-white text-3xl font-bold">{raffle.prizePool} <span className="text-xl">ETH</span></p>
+                <p className="text-white text-3xl font-bold drop-shadow-lg">{raffle.prizePool} <span className="text-xl">ETH</span></p>
               </div>
               {isActive && (
-                <div className="prize-badge">
-                  <Zap className="h-3.5 w-3.5" />
+                <motion.div 
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="prize-badge backdrop-blur-md"
+                >
+                  <Zap className="h-3.5 w-3.5 animate-pulse" />
                   <span>Live</span>
-                </div>
+                </motion.div>
               )}
             </div>
-            {/* Decorative overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+            {/* Decorative overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl" />
           </div>
 
           {/* Card content */}
-          <div className="flex-1 p-4 flex flex-col">
+          <div className="flex-1 p-5 flex flex-col bg-gradient-to-b from-transparent to-black/10">
             {/* Stats */}
-            <div className="space-y-2.5 mb-4">
-              <div className="stat-row">
+            <div className="space-y-3 mb-4">
+              <div className="stat-row hover:bg-white/5 rounded-md px-2 transition-colors">
                 <div className="stat-label">
-                  <Ticket className="h-4 w-4" />
+                  <Ticket className="h-4 w-4 text-primary" />
                   <span>Ticket Price</span>
                 </div>
                 <span className="stat-value">{raffle.ticketPrice} ETH</span>
               </div>
               
-              <div className="stat-row">
+              <div className="stat-row hover:bg-white/5 rounded-md px-2 transition-colors">
                 <div className="stat-label">
-                  <Users className="h-4 w-4" />
+                  <Users className="h-4 w-4 text-primary" />
                   <span>Players</span>
                 </div>
                 <span className="stat-value">{raffle.participants}</span>
               </div>
               
-              <div className="stat-row">
+              <div className="stat-row hover:bg-white/5 rounded-md px-2 transition-colors">
                 <div className="stat-label">
-                  <Clock className="h-4 w-4" />
+                  <Clock className="h-4 w-4 text-primary" />
                   <span>Ends In</span>
                 </div>
                 <Countdown endsAt={raffle.endsAt} />
               </div>
             </div>
+
+            {/* Divider */}
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent mb-4" />
 
             {/* Enter button */}
             <div className="mt-auto" onClick={(e) => e.preventDefault()}>

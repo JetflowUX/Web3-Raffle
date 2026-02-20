@@ -16,32 +16,38 @@ export function TopBar() {
     .toFixed(2);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-border bg-secondary/95 backdrop-blur-sm">
-      <div className="flex h-16 items-center justify-between px-6">
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-2 text-sm">
-            <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-white font-medium">{totalActiveRaffles}</span>
+    <header className="sticky top-0 z-30 border-b border-border bg-secondary/95 backdrop-blur-xl shadow-lg">
+      <div className="flex h-16 items-center justify-between px-8">
+        <div className="flex items-center gap-10">
+          <div className="flex items-center gap-3 text-sm">
+            <div className="relative">
+              <div className="h-2.5 w-2.5 rounded-full bg-primary animate-pulse" />
+              <div className="absolute inset-0 h-2.5 w-2.5 rounded-full bg-primary animate-ping opacity-75" />
+            </div>
+            <span className="text-white font-semibold">{totalActiveRaffles}</span>
             <span className="text-muted">Active Raffles</span>
           </div>
+          <div className="h-6 w-px bg-border" />
           <div className="text-sm">
             <span className="text-muted">Total Pool: </span>
-            <span className="font-semibold text-primary">{totalPrizePool} ETH</span>
+            <span className="font-bold text-primary">{totalPrizePool} ETH</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <button
             onClick={toggleMock}
-            className={`flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${
               useMock
-                ? "bg-accent text-white border border-border"
-                : "text-muted hover:text-white"
+                ? "bg-primary/20 text-primary border border-primary/30 shadow-lg shadow-primary/10"
+                : "text-muted hover:text-white hover:bg-accent border border-transparent"
             }`}
           >
-            <Sparkles className="h-3.5 w-3.5" />
-            {useMock ? "Mock" : "Live"}
+            <Sparkles className="h-4 w-4" />
+            {useMock ? "Mock Mode" : "Live Mode"}
           </button>
+          
+          <div className="h-8 w-px bg-border" />
           
           <WalletButton />
         </div>
