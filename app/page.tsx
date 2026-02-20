@@ -128,11 +128,8 @@ export default function HomePage() {
                     ? `${config.bgColor} ${config.borderColor} border text-white shadow-lg`
                     : "bg-card border border-border text-muted hover:text-white hover:border-primary/30"
                 }`}
-                style={isSelected ? { 
-                  boxShadow: `0 0 20px ${config.color}30` 
-                } : {}}
               >
-                <Icon className="h-4 w-4" style={{ color: isSelected ? config.color : undefined }} />
+                <Icon className="h-4 w-4" />
                 {blockchain}
               </button>
             );

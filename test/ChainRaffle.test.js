@@ -153,7 +153,7 @@ describe("ChainRaffle", function () {
       await chainRaffle.selectWinner(1);
       
       const raffle = await chainRaffle.getRaffle(1);
-      const winner = raffle.winner;
+      const { winner } = raffle;
       
       // Verify platform fee was collected
       const feeCollected = await chainRaffle.totalFeesCollected();

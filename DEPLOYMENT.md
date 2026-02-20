@@ -42,8 +42,9 @@ PRIVATE_KEY=your_private_key_here_without_0x_prefix
 ### 3. (Optional) Add RPC URLs
 
 For better reliability, get free RPC URLs from:
-- **Infura**: https://infura.io
-- **Alchemy**: https://alchemy.com
+
+- **Infura**: [https://infura.io](https://infura.io)
+- **Alchemy**: [https://alchemy.com](https://alchemy.com)
 
 ```env
 SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_API_KEY

@@ -18,6 +18,7 @@ A modern, production-ready Web3 raffle draw platform built with Next.js 14, Type
 ## Tech Stack
 
 ### Frontend
+
 - **Next.js 14** (App Router)
 - **TypeScript**
 - **TailwindCSS** + shadcn/ui
@@ -28,6 +29,7 @@ A modern, production-ready Web3 raffle draw platform built with Next.js 14, Type
 - **Sonner** (toast notifications)
 
 ### Backend / Smart Contract
+
 - **Solidity 0.8.20**
 - **Hardhat** (development environment)
 - **OpenZeppelin Contracts** (ReentrancyGuard, Ownable)
@@ -154,19 +156,41 @@ npm run test:contract
 ```
 
 **Test Coverage:**
+
 - Raffle creation validation
 - Ticket purchasing logic
 - Winner selection (time-based and max participants)
 - Platform fee management
-- EAvailable Scripts
+- Edge cases and error handling
 
-### Frontend
+### Deployment
+
+Deploy to different networks:
+
+```bash
+npm run deploy:sepolia   # Sepolia testnet
+npm run deploy:mainnet   # Ethereum mainnet
+npm run deploy:polygon   # Polygon network
+npm run deploy:bsc       # Binance Smart Chain
+```
+
+After deployment, verify on Etherscan:
+
+```bash
+npm run verify:sepolia -- DEPLOYED_CONTRACT_ADDRESS
+```
+
+## Available Scripts
+
+### Development
+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint
 
-### Smart Contract
+### Smart Contracts
+
 - `npm run compile` - Compile Solidity contracts
 - `npm run test:contract` - Run contract test suite
 - `npm run deploy:sepolia` - Deploy to Sepolia testnet
@@ -181,107 +205,33 @@ npm run test:contract
 See [.env.local.example](./.env.local.example) for complete configuration.
 
 ### Frontend (Required)
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | WalletConnect Cloud project ID |
-| `NEXT_PUBLIC_USE_MOCKS` | Enable mock mode (`true`/`false`) |
+
+| Variable                                  | Description                         |
+|-------------------------------------------|-------------------------------------|
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`    | WalletConnect Cloud project ID      |
+| `NEXT_PUBLIC_USE_MOCKS`                   | Enable mock mode (`true`/`false`)   |
 
 ### Frontend (Optional)
-| Variable | Description |
-|----------|-------------|
-| `NEXT_PUBLIC_CONTRACT_ADDRESS_MAINNET` | Contract address on Ethereum mainnet |
-| `NEXT_PUBLIC_CONTRACT_ADDRESS_SEPOLIA` | Contract address on Sepolia testnet |
-| `NEXT_PUBLIC_CONTRACT_ADDRESS_POLYGON` | Contract address on Polygon |
+
+| Variable                                  | Description                              |
+|-------------------------------------------|------------------------------------------|
+| `NEXT_PUBLIC_CONTRACT_ADDRESS_MAINNET`    | Contract address on Ethereum mainnet     |
+| `NEXT_PUBLIC_CONTRACT_ADDRESS_SEPOLIA`    | Contract address on Sepolia testnet      |
+| `NEXT_PUBLIC_CONTRACT_ADDRESS_POLYGON`    | Contract address on Polygon              |
 
 ### Backend (For Deployment)
-| Variable | Description |
-|----------|-------------|
-| `PRIVATE_KEY` | Wallet private key (without 0x prefix) |
-| `SEPOLIA_RPC_URL` | Sepolia RPC endpoint |
-| `MAINNET_RPC_URL` | Mainnet RPC endpoint |
-| `ETHERSCAN_API_KEY` | Etherscan API key for verification
-npm run deploy:mainnet   # Ethereum mainnet
-npm run deploy:polygon   # Polygon network
-npm run deploy:bsc       # Binance Smart Chain
-```
 
-After deployment, verify on Etherscan:
-
-```bash
-npm run verify:sepolia -- DEPLOYED_CONTRACT_ADDRESS
-```
-
-The app expects a raffle contract with the following interface:
-
-```solidity
-// Read functions
-function getRaffles() external view returns (Raffle[] memory);
-function getRaffle(uint256 raffleId) external view returns (Raffle memory);
-function getParticipants(uint256 raffleId) external view returns (address[] memory);
-function getUserTickets(address user) external view returns (UserTicket[] memory);
-
-// Write functions
-function enterRaffle(uint256 raffleId, uint256 ticketCount) external payable;
-function createRaffle(uint256 ticketPrice, uint256 maxParticipants, uint256 duration) external payable;
-```
-
-Update the ABI in `lib/contract.ts` to match your deployed contract.
-
-## Mock Mode
-
-The app includes a robust mock mode for development without blockchain deployment:
-
-- **15 diverse raffles** across all 6 supported blockchains
-- Toggle via environment variable or runtime
-- Persisted preferences
-- Realistic test data including:
-  - Active, upcoming, and ended raffles
-  - Various prize pools and ticket prices
-  - Different participant counts
-  - Multiple blockchain representations
-- Falls back automatically if contract calls fail
-- Perfect for UI development and testing
-
-## Deployment
-
-### Frontend Deployment
-
-Build for production:
-
-```bash
-npm run build
-npm start
-```
-
-Deploy to Vercel:
-
-```bash
-vercel deploy
-```
-
-### Smart Contract Deployment
-
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for comprehensive deployment guide including:
-- Prerequisites and setup
-- Testnet deployment (Sepolia)
-- Mainnet deployment
-- Contract verification on Etherscan
-- Multi-chain deployment strategies
-- Gas cost estimates
-- Troubleshooting guide
-
-## Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | WalletConnect Cloud project ID | Yes |
-| `NEXT_PUBLIC_CONTRACT_ADDRESS_MAINNET` | Contract address on Ethereum mainnet | No |
-| `NEXT_PUBLIC_CONTRACT_ADDRESS_SEPOLIA` | Contract address on Sepolia testnet | No |
-| `NEXT_PUBLIC_USE_MOCKS` | Enable mock mode by default (`true`/`false`) | No |
+| Variable               | Description                                 |
+|------------------------|---------------------------------------------|
+| `PRIVATE_KEY`          | Wallet private key (without 0x prefix)      |
+| `SEPOLIA_RPC_URL`      | Sepolia RPC endpoint                        |
+| `MAINNET_RPC_URL`      | Mainnet RPC endpoint                        |
+| `ETHERSCAN_API_KEY`    | Etherscan API key for verification          |
 
 ## Features in Detail
 
 ### Multi-Blockchain Support
+
 - 🔷 **Ethereum** - Primary network with full contract deployment
 - 🟣 **Solana** - Fast, low-cost transactions
 - 🔴 **Polkadot** - Cross-chain interoperability
@@ -290,6 +240,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for comprehensive deployment guide includin
 - 🔺 **Avalanche** - High-throughput subnet architecture
 
 Filter raffles by blockchain on the home page. Each raffle shows:
+
 - Blockchain icon and badge
 - Native currency (ETH, SOL, DOT, ADA, APT, AVAX)
 - Custom color scheme per blockchain
@@ -326,14 +277,60 @@ Filter raffles by blockchain on the home page. Each raffle shows:
 - Empty state when no tickets
 
 ### Winners
+
 - Recent winners list
 - Prize amount and raffle ID
 - Timestamp of win
 - Winner wallet address
 
+## Mock Mode
+
+The app includes a robust mock mode for development without blockchain deployment:
+
+- **15 diverse raffles** across all 6 supported blockchains
+- Toggle via environment variable or runtime
+- Persisted preferences
+- Realistic test data including:
+  - Active, upcoming, and ended raffles
+  - Various prize pools and ticket prices
+  - Different participant counts
+  - Multiple blockchain representations
+- Falls back automatically if contract calls fail
+- Perfect for UI development and testing
+
+## Production Deployment
+
+### Frontend Deployment
+
+Build for production:
+
+```bash
+npm run build
+npm start
+```
+
+Deploy to Vercel:
+
+```bash
+vercel deploy
+```
+
+### Smart Contract Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for comprehensive deployment guide including:
+
+- Prerequisites and setup
+- Testnet deployment (Sepolia)
+- Mainnet deployment
+- Contract verification on Etherscan
+- Multi-chain deployment strategies
+- Gas cost estimates
+- Troubleshooting guide
+
 ## Design System
 
 ### Colors
+
 - Background: `#0B0F1A`
 - Primary: `#6366F1` (indigo)
 - Secondary: `#8B5CF6` (purple)
@@ -344,6 +341,7 @@ Filter raffles by blockchain on the home page. Each raffle shows:
 - Muted: `#9CA3AF`
 
 ### Typography
+
 - Sora (body)
 - Space Grotesk (display)
 - JetBrains Mono (monospace)
