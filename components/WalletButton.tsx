@@ -1,7 +1,7 @@
 "use client";
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Copy, ExternalLink, LogOut, Wallet2 } from "lucide-react";
+import { Copy, LogOut, Wallet2 } from "lucide-react";
 import { toast } from "sonner";
 import { useDisconnect } from "wagmi";
 
@@ -48,16 +48,6 @@ export function WalletButton() {
             <Button variant="ghost" size="sm" onClick={() => disconnect()}>
               <LogOut className="h-4 w-4" />
             </Button>
-            <a
-              href={chain?.blockExplorers?.default?.url}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden md:inline-flex"
-            >
-              <Button variant="ghost" size="sm">
-                <ExternalLink className="h-4 w-4" />
-              </Button>
-            </a>
           </div>
         );
       }}
