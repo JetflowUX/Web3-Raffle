@@ -16,20 +16,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/loading.js"
     ],
+    "/winners/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/winners/page.js"
+    ],
     "/create/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/create/page.js"
     ],
-    "/my-tickets/page": [
+    "/raffle/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/my-tickets/page.js"
-    ],
-    "/winners/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/winners/page.js"
+      "static/chunks/app/raffle/[id]/page.js"
     ]
   }
 }
