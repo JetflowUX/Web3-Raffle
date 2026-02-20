@@ -1,4 +1,4 @@
-import type { Address, WalletClient } from "viem";
+import type { Address, Chain, WalletClient } from "viem";
 import { createPublicClient, http, parseEther } from "viem";
 import { mainnet, sepolia } from "viem/chains";
 
@@ -106,13 +106,13 @@ const raffleAbi = [
   }
 ] as const;
 
-const chainMap = {
+const chainMap: Record<number, Chain> = {
   1: mainnet,
   11155111: sepolia
 };
 
 function getPublicClient(chainId?: number) {
-  const chain = chainId && chainMap[chainId as keyof typeof chainMap];
+  const chain = chainId ? chainMap[chainId] : undefined;
   return createPublicClient({
     chain: chain ?? sepolia,
     transport: http()
