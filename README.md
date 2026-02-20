@@ -229,14 +229,22 @@ Update the ABI in `lib/contract.ts` to match your deployed contract.
 
 ## Mock Mode
 
-The app includes a mock mode for development without a deployed contract:
+The app includes a robust mock mode for development without blockchain deployment:
 
-- Toggle via the "Mock On/Off" button in the navbar
-- Persisted in localStorage
-- Provides realistic test data for all features
-- Falls back to mock data automatically if contract calls fail
+- **15 diverse raffles** across all 6 supported blockchains
+- Toggle via environment variable or runtime
+- Persisted preferences
+- Realistic test data including:
+  - Active, upcoming, and ended raffles
+  - Various prize pools and ticket prices
+  - Different participant counts
+  - Multiple blockchain representations
+- Falls back automatically if contract calls fail
+- Perfect for UI development and testing
 
 ## Deployment
+
+### Frontend Deployment
 
 Build for production:
 
@@ -251,6 +259,17 @@ Deploy to Vercel:
 vercel deploy
 ```
 
+### Smart Contract Deployment
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for comprehensive deployment guide including:
+- Prerequisites and setup
+- Testnet deployment (Sepolia)
+- Mainnet deployment
+- Contract verification on Etherscan
+- Multi-chain deployment strategies
+- Gas cost estimates
+- Troubleshooting guide
+
 ## Environment Variables
 
 | Variable | Description | Required |
@@ -262,26 +281,45 @@ vercel deploy
 
 ## Features in Detail
 
+### Multi-Blockchain Support
+- 🔷 **Ethereum** - Primary network with full contract deployment
+- 🟣 **Solana** - Fast, low-cost transactions
+- 🔴 **Polkadot** - Cross-chain interoperability
+- 🔵 **Cardano** - Research-driven blockchain
+- ⚫ **Aptos** - Next-gen Move-based blockchain
+- 🔺 **Avalanche** - High-throughput subnet architecture
+
+Filter raffles by blockchain on the home page. Each raffle shows:
+- Blockchain icon and badge
+- Native currency (ETH, SOL, DOT, ADA, APT, AVAX)
+- Custom color scheme per blockchain
+
 ### Wallet Connection
+
 - Powered by RainbowKit with custom theming
 - Supports Ethereum mainnet and Sepolia testnet
 - Shows balance and chain switcher
 - Copy address and explorer links
 
 ### Raffle Entry
+
 - Modal with ticket count input
 - Real-time total cost calculation
+- Blockchain-specific currency display
 - Transaction status (pending, success, failed)
 - Explorer link for completed transactions
 - Automatic data refresh on success
+- Toast notifications with loading states
 
 ### Create Raffle
+
 - Form with validation
 - Set ticket price, max participants, duration, and prize
 - Loading states during transaction
 - Toast notifications for feedback
 
 ### My Tickets
+
 - View all raffles user has entered
 - Shows ticket count per raffle
 - Winner badge and claim button
