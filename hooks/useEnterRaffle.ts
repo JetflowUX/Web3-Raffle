@@ -13,7 +13,7 @@ export function useEnterRaffle() {
   const { useMock } = useMockMode();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: async ({
       raffleId,
       ticketCount,
@@ -43,6 +43,4 @@ export function useEnterRaffle() {
       queryClient.invalidateQueries({ queryKey: ["tickets"] });
     }
   });
-
-  return mutation;
 }

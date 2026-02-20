@@ -13,7 +13,7 @@ export function useCreateRaffle() {
   const { useMock } = useMockMode();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: async ({
       ticketPrice,
       maxParticipants,
@@ -40,6 +40,4 @@ export function useCreateRaffle() {
       queryClient.invalidateQueries({ queryKey: ["raffles"] });
     }
   });
-
-  return mutation;
 }
