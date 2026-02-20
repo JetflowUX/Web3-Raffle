@@ -1,7 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 
 import { Badge } from "../../../components/ui/badge";
 import { Button } from "../../../components/ui/button";
@@ -44,11 +46,24 @@ export default function RaffleDetailsPage({ params }: { params: { id: string } }
   }
 
   if (!raffle) {
-    return <div className="mx-auto w-full max-w-6xl px-6 py-16">Raffle not found.</div>;
+    return (
+      <div className="mx-auto w-full max-w-6xl px-6 py-16">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-text">
+          <ArrowLeft className="h-4 w-4" />
+          Back to raffles
+        </Link>
+        <p className="mt-8 text-center text-text">Raffle not found.</p>
+      </div>
+    );
   }
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-16">
+      <Link href="/" className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-text mb-6">
+        <ArrowLeft className="h-4 w-4" />
+        Back to raffles
+      </Link>
+
       <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-6">
           <div className="flex items-center justify-between">

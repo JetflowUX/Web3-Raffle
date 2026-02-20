@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 
 import { Button } from "../../components/ui/button";
 import { Card, CardContent } from "../../components/ui/card";
@@ -20,6 +22,11 @@ export default function CreateRafflePage() {
     try {
       await createMutation.mutateAsync({ ticketPrice, maxParticipants, duration, prizeAmount });
       toast.success("Raffle created.");
+      // Reset form after success
+      setTicketPrice("0.05");
+      setMaxParticipants(250);
+      setDuration(7200);
+      setPrizeAmount("10");
     } catch (error) {
       const message = error instanceof Error ? error.message : "Transaction failed.";
       toast.error(message);
@@ -28,6 +35,11 @@ export default function CreateRafflePage() {
 
   return (
     <div className="mx-auto w-full max-w-3xl px-6 py-16">
+      <Link href="/" className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-text mb-6">
+        <ArrowLeft className="h-4 w-4" />
+        Back to raffles
+      </Link>
+
       <div className="space-y-3">
         <p className="text-xs uppercase tracking-[0.3em] text-muted">Create raffle</p>
         <h1 className="font-display text-3xl font-semibold text-text">Launch a new draw</h1>
@@ -65,9 +77,14 @@ export default function CreateRafflePage() {
             <label className="text-sm text-muted">Prize amount (ETH)</label>
             <Input value={prizeAmount} onChange={(event) => setPrizeAmount(event.target.value)} />
           </div>
-          <Button onClick={handleSubmit} disabled={createMutation.isPending}>
-            {createMutation.isPending ? "Creating..." : "Create raffle"}
-          </Button>
+          <div className="flex gap-3">
+            <Button onClick={handleSubmit} disabled={createMutation.isPending} className="flex-1">
+              {createMutation.isPending ? "Creating..." : "Create raffle"}
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/">Cancel</Link>
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
