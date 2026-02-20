@@ -70,7 +70,7 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
             <span className="text-text">{formatToken(totalCost)} ETH</span>
           </div>
           {!isConnected && (
-            <p className="text-xs text-warning">Connect a wallet to enter.</p>
+            <p className="text-xs text-accent">Connect a wallet to enter.</p>
           )}
         </div>
 
