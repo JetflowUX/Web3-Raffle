@@ -19,7 +19,8 @@ export default function MyTicketsPage() {
       toast.loading("Processing claim...");
       // Simulate claim processing
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      toast.success(`Reward claimed for Raffle #${raffleId}!`);
+      const successMessage = "Reward claimed for Raffle #" + raffleId + "!";
+      toast.success(successMessage);
     } catch (error) {
       toast.error("Failed to claim reward. Please try again.");
     }
@@ -54,12 +55,15 @@ export default function MyTicketsPage() {
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           {tickets?.map((ticket) => {
             const raffle = raffles?.find((item) => item.id === ticket.raffleId);
+            const raffleLink = `/raffle/${ticket.raffleId}`;
+            const prizeDisplay = raffle ? formatToken(raffle.prizePool) + " ETH" : "-";
+            
             return (
               <Card key={ticket.raffleId} className="glass-card">
                 <CardContent className="space-y-4">
                   <div className="flex items-center justify-between">
                     <Link
-                      href={`/raffle/${ticket.raffleId}`}
+                      href={raffleLink}
                       className="text-sm text-muted transition hover:text-text hover:underline"
                     >
                       Raffle #{ticket.raffleId}
@@ -72,9 +76,7 @@ export default function MyTicketsPage() {
                   </div>
                   <div className="flex items-center justify-between text-sm text-muted">
                     <span>Prize pool</span>
-                    <span className="text-text">
-                      {raffle ? `${formatToken(raffle.prizePool)} ETH` : "-"}
-                    </span>
+                    <span className="text-text">{prizeDisplay}</span>
                   </div>
                   <div className="flex gap-2">
                     {ticket.isWinner ? (
@@ -86,7 +88,7 @@ export default function MyTicketsPage() {
                           Claim reward
                         </Button>
                         <Button variant="outline" size="sm" asChild className="flex-1">
-                          <Link href={`/raffle/${ticket.raffleId}`}>View raffle</Link>
+                          <Link href={raffleLink}>View raffle</Link>
                         </Button>
                       </>
                     ) : (
@@ -95,7 +97,7 @@ export default function MyTicketsPage() {
                           Waiting for draw
                         </Button>
                         <Button variant="outline" size="sm" asChild className="flex-1">
-                          <Link href={`/raffle/${ticket.raffleId}`}>Details</Link>
+                          <Link href={raffleLink}>Details</Link>
                         </Button>
                       </>
                     )}
