@@ -1,10 +1,17 @@
 import { Blockchain } from "./types";
-import { LucideIcon } from "lucide-react";
-import { Hexagon, Circle, Diamond, Square, Triangle, Octagon } from "lucide-react";
+import { 
+  EthereumIcon, 
+  SolanaIcon, 
+  PolkadotIcon, 
+  CardanoIcon, 
+  AptosIcon, 
+  AvalancheIcon 
+} from "../components/BlockchainIcons";
+import React from "react";
 
 export interface BlockchainConfig {
   name: Blockchain;
-  icon: LucideIcon;
+  icon: React.FC<{ className?: string; style?: React.CSSProperties }>;
   color: string;
   bgColor: string;
   borderColor: string;
@@ -15,7 +22,7 @@ export interface BlockchainConfig {
 export const blockchainConfigs: Record<Blockchain, BlockchainConfig> = {
   Ethereum: {
     name: "Ethereum",
-    icon: Diamond,
+    icon: EthereumIcon,
     color: "#627EEA",
     bgColor: "bg-[#627EEA]/20",
     borderColor: "border-[#627EEA]/30",
@@ -24,7 +31,7 @@ export const blockchainConfigs: Record<Blockchain, BlockchainConfig> = {
   },
   Solana: {
     name: "Solana",
-    icon: Circle,
+    icon: SolanaIcon,
     color: "#14F195",
     bgColor: "bg-[#14F195]/20",
     borderColor: "border-[#14F195]/30",
@@ -33,7 +40,7 @@ export const blockchainConfigs: Record<Blockchain, BlockchainConfig> = {
   },
   Polkadot: {
     name: "Polkadot",
-    icon: Hexagon,
+    icon: PolkadotIcon,
     color: "#E6007A",
     bgColor: "bg-[#E6007A]/20",
     borderColor: "border-[#E6007A]/30",
@@ -42,7 +49,7 @@ export const blockchainConfigs: Record<Blockchain, BlockchainConfig> = {
   },
   Cardano: {
     name: "Cardano",
-    icon: Triangle,
+    icon: CardanoIcon,
     color: "#0033AD",
     bgColor: "bg-[#0033AD]/20",
     borderColor: "border-[#0033AD]/30",
@@ -51,7 +58,7 @@ export const blockchainConfigs: Record<Blockchain, BlockchainConfig> = {
   },
   Aptos: {
     name: "Aptos",
-    icon: Square,
+    icon: AptosIcon,
     color: "#00E5CC",
     bgColor: "bg-[#00E5CC]/20",
     borderColor: "border-[#00E5CC]/30",
@@ -60,7 +67,7 @@ export const blockchainConfigs: Record<Blockchain, BlockchainConfig> = {
   },
   Avalanche: {
     name: "Avalanche",
-    icon: Octagon,
+    icon: AvalancheIcon,
     color: "#E84142",
     bgColor: "bg-[#E84142]/20",
     borderColor: "border-[#E84142]/30",

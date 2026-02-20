@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, ExternalLink, CheckCircle2 } from "lucide-react";
 import { useChainId } from "wagmi";
 
 import type { Raffle } from "../lib/types";
@@ -12,6 +12,7 @@ import { Input } from "./ui/input";
 import { useEnterRaffle } from "../hooks/useEnterRaffle";
 import { clampNumber, formatToken, getExplorerTxUrl } from "../lib/utils";
 import { useWallet } from "../hooks/useWallet";
+import { getBlockchainConfig } from "../lib/blockchainConfig";
 
 export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
   const [open, setOpen] = useState(false);
@@ -20,6 +21,7 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
   const { isConnected } = useWallet();
   const enterMutation = useEnterRaffle();
   const chainId = useChainId();
+  const blockchainConfig = getBlockchainConfig(raffle.blockchain);
 
   const totalCost = useMemo(() => {
     return Number(raffle.ticketPrice) * ticketCount;
@@ -27,17 +29,20 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
 
   const handleSubmit = async () => {
     try {
+      toast.loading("Preparing transaction...", { id: "enter-raffle" });
+      
       const result = await enterMutation.mutateAsync({
         raffleId: raffle.id,
         ticketCount,
         totalCost: totalCost.toString()
       });
+      
       setTxHash(result?.txHash ?? null);
-      toast.success("Transaction submitted.");
+      toast.success("Successfully entered raffle!", { id: "enter-raffle" });
       setTicketCount(1);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Transaction failed.";
-      toast.error(message);
+      toast.error(message, { id: "enter-raffle" });
     }
   };
 
@@ -61,59 +66,81 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
         <DialogHeader>
           <DialogTitle>Enter Raffle #{raffle.id}</DialogTitle>
           <DialogDescription>
-            Confirm the number of tickets and complete the transaction.
+            Purchase tickets on {raffle.blockchain} to enter this raffle.
           </DialogDescription>
         </DialogHeader>
 
         <div className="mt-4 space-y-4">
           <div>
-            <label className="text-sm text-muted">Tickets</label>
+            <label className="text-sm text-muted mb-2 block">Number of Tickets</label>
             <Input
               type="number"
               min={1}
+              max={99}
               value={ticketCount}
               onChange={(event) =>
                 setTicketCount(clampNumber(Number(event.target.value), 1, 99))
               }
             />
           </div>
-          <div className="flex items-center justify-between text-sm text-muted">
-            <span>Total cost</span>
-            <span className="text-text">{formatToken(totalCost)} ETH</span>
+          
+          <div className="rounded-lg bg-card border border-border p-4 space-y-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted">Price per ticket</span>
+              <span className="text-white font-semibold">{formatToken(Number(raffle.ticketPrice))} {blockchainConfig.currency}</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted">Tickets</span>
+              <span className="text-white font-semibold">×{ticketCount}</span>
+            </div>
+            <div className="h-px bg-border my-2" />
+            <div className="flex items-center justify-between">
+              <span className="text-white font-semibold">Total cost</span>
+              <span className="text-primary text-lg font-bold">{formatToken(totalCost)} {blockchainConfig.currency}</span>
+            </div>
           </div>
+          
           {!isConnected && (
-            <p className="text-xs text-accent">Connect a wallet to enter.</p>
+            <div className="flex items-center gap-2 p-3 rounded-lg bg-accent/10 border border-accent/30">
+              <span className="text-xs text-accent">⚠️ Connect your wallet to enter this raffle</span>
+            </div>
           )}
         </div>
 
         {txHash ? (
-          <div className="mt-6 space-y-3">
-            <p className="text-sm text-accent">Entry submitted successfully.</p>
+          <div className="mt-6 space-y-4">
+            <div className="flex items-center gap-3 p-4 rounded-lg bg-primary/10 border border-primary/30">
+              <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+              <div>
+                <p className="text-sm font-semibold text-white">Entry successful!</p>
+                <p className="text-xs text-muted mt-1">Your tickets have been purchased</p>
+              </div>
+            </div>
             <a
               href={getExplorerTxUrl(txHash, chainId)}
               target="_blank"
               rel="noreferrer"
-              className="text-xs text-muted underline"
+              className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"
             >
-              View on explorer
+              View transaction <ExternalLink className="h-3.5 w-3.5" />
             </a>
-            <Button className="w-full" variant="outline" onClick={resetModal}>
+            <Button className="w-full bg-primary text-black hover:bg-primary/90" onClick={resetModal}>
               Done
             </Button>
           </div>
         ) : (
           <Button
-            className="mt-6 w-full"
+            className="mt-6 w-full bg-primary text-black hover:bg-primary/90 font-semibold"
             onClick={handleSubmit}
             disabled={!isConnected || enterMutation.isPending}
           >
             {enterMutation.isPending ? (
               <span className="flex items-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Waiting for confirmation
+                Confirming transaction...
               </span>
             ) : (
-              "Confirm Entry"
+              `Enter Raffle (${formatToken(totalCost)} ${blockchainConfig.currency})`
             )}
           </Button>
         )}
