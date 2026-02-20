@@ -299,6 +299,7 @@ export async function enterRaffle({
   }
 
   const hash = await walletClient.writeContract({
+    chain: walletClient.chain,
     address: contractAddress,
     abi: raffleAbi,
     functionName: "enterRaffle",
@@ -334,6 +335,7 @@ export async function createRaffle({
   }
 
   const hash = await walletClient.writeContract({
+    chain: walletClient.chain,
     address: contractAddress,
     abi: raffleAbi,
     functionName: "createRaffle",
