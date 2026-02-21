@@ -21,15 +21,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/create/page.js"
     ],
-    "/winners/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/winners/page.js"
-    ],
     "/my-tickets/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/my-tickets/page.js"
+    ],
+    "/winners/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/winners/page.js"
     ]
   }
 }

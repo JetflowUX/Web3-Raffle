@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
@@ -12,6 +13,7 @@ import { useCreateRaffle } from "../../hooks/useCreateRaffle";
 import { clampNumber } from "../../lib/utils";
 
 export default function CreateRafflePage() {
+  const router = useRouter();
   const [ticketPrice, setTicketPrice] = useState("0.05");
   const [maxParticipants, setMaxParticipants] = useState(250);
   const [duration, setDuration] = useState(7200);
@@ -21,12 +23,19 @@ export default function CreateRafflePage() {
   const handleSubmit = async () => {
     try {
       await createMutation.mutateAsync({ ticketPrice, maxParticipants, duration, prizeAmount });
-      toast.success("Raffle created.");
+      toast.success("Raffle created successfully! Redirecting to home...");
+      
       // Reset form after success
       setTicketPrice("0.05");
       setMaxParticipants(250);
       setDuration(7200);
       setPrizeAmount("10");
+      
+      // Redirect to home after a short delay to show the success message
+      setTimeout(() => {
+        router.push("/");
+        router.refresh();
+      }, 1500);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Transaction failed.";
       toast.error(message);
