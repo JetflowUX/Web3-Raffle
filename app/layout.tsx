@@ -4,6 +4,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Sidebar } from "../components/Sidebar";
 import { TopBar } from "../components/TopBar";
+import { Footer } from "../components/Footer";
 
 const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
 const space = Space_Grotesk({ subsets: ["latin"], variable: "--font-space", display: "swap" });
@@ -31,9 +32,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <div className="hidden md:block md:fixed md:left-0 md:top-0 md:z-40 md:h-screen md:w-64">
               <Sidebar />
             </div>
-            <div className="flex-1 md:ml-64">
+            <div className="flex-1 md:ml-64 flex flex-col">
               <TopBar />
-              <main className="relative min-h-[calc(100vh-4rem)] p-4 sm:p-6 md:p-8">{children}</main>
+              <main className="relative flex-1 p-4 sm:p-6 md:p-8">{children}</main>
+              <Footer />
             </div>
           </div>
         </Providers>
