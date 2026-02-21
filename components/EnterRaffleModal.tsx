@@ -62,17 +62,17 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
           Enter Raffle
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-sm mx-4">
         <DialogHeader>
-          <DialogTitle>Enter Raffle #{raffle.id}</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-lg sm:text-xl">Enter Raffle #{raffle.id}</DialogTitle>
+          <DialogDescription className="text-xs sm:text-sm">
             Purchase tickets on {raffle.blockchain} to enter this raffle.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="mt-4 space-y-4">
+        <div className="mt-4 space-y-3 sm:space-y-4">
           <div>
-            <label className="text-sm text-muted mb-2 block">Number of Tickets</label>
+            <label className="text-xs sm:text-sm text-muted mb-2 block">Number of Tickets</label>
             <Input
               type="number"
               min={1}
@@ -81,27 +81,28 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
               onChange={(event) =>
                 setTicketCount(clampNumber(Number(event.target.value), 1, 99))
               }
+              className="text-sm"
             />
           </div>
           
-          <div className="rounded-lg bg-card border border-border p-4 space-y-2">
-            <div className="flex items-center justify-between text-sm">
+          <div className="rounded-lg bg-card border border-border p-3 sm:p-4 space-y-2">
+            <div className="flex items-center justify-between text-xs sm:text-sm">
               <span className="text-muted">Price per ticket</span>
               <span className="text-white font-semibold">{formatToken(Number(raffle.ticketPrice))} {blockchainConfig.currency}</span>
             </div>
-            <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center justify-between text-xs sm:text-sm">
               <span className="text-muted">Tickets</span>
               <span className="text-white font-semibold">×{ticketCount}</span>
             </div>
             <div className="h-px bg-border my-2" />
             <div className="flex items-center justify-between">
-              <span className="text-white font-semibold">Total cost</span>
-              <span className="text-primary text-lg font-bold">{formatToken(totalCost)} {blockchainConfig.currency}</span>
+              <span className="text-white font-semibold text-xs sm:text-sm">Total cost</span>
+              <span className="text-primary text-base sm:text-lg font-bold">{formatToken(totalCost)} {blockchainConfig.currency}</span>
             </div>
           </div>
           
           {!isConnected && (
-            <div className="flex items-center gap-2 p-3 rounded-lg bg-accent/10 border border-accent/30">
+            <div className="flex items-center gap-2 p-2 sm:p-3 rounded-lg bg-accent/10 border border-accent/30">
               <span className="text-xs text-accent">⚠️ Connect your wallet to enter this raffle</span>
             </div>
           )}
@@ -109,7 +110,7 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
 
         {txHash ? (
           <div className="mt-6 space-y-4">
-            <div className="flex items-center gap-3 p-4 rounded-lg bg-primary/10 border border-primary/30">
+            <div className="flex items-center gap-3 p-3 sm:p-4 rounded-lg bg-primary/10 border border-primary/30">
               <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
               <div>
                 <p className="text-sm font-semibold text-white">Entry successful!</p>
@@ -130,14 +131,14 @@ export function EnterRaffleModal({ raffle }: { raffle: Raffle }) {
           </div>
         ) : (
           <Button
-            className="mt-6 w-full bg-primary text-black hover:bg-primary/90 font-semibold"
+            className="mt-6 w-full bg-primary text-black hover:bg-primary/90 font-semibold text-sm sm:text-base py-2"
             onClick={handleSubmit}
             disabled={!isConnected || enterMutation.isPending}
           >
             {enterMutation.isPending ? (
               <span className="flex items-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Confirming transaction...
+                Confirming...
               </span>
             ) : (
               `Enter Raffle (${formatToken(totalCost)} ${blockchainConfig.currency})`

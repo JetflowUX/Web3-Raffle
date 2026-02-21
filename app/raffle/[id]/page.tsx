@@ -58,34 +58,34 @@ export default function RaffleDetailsPage({ params }: { params: { id: string } }
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-16">
-      <Link href="/" className="inline-flex items-center gap-2 text-sm text-muted transition hover:text-text mb-6">
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
+      <Link href="/" className="inline-flex items-center gap-2 text-xs sm:text-sm text-muted transition hover:text-text mb-6">
         <ArrowLeft className="h-4 w-4" />
         Back to raffles
       </Link>
 
-      <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+      <div className="grid gap-6 sm:gap-8 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-6">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col xs:flex-row xs:items-start xs:justify-between gap-4">
             <div>
               <p className="text-xs uppercase tracking-[0.3em] text-muted">Raffle #{raffle.id}</p>
-              <h1 className="font-display text-3xl font-semibold text-text">Prize Pool</h1>
-              <p className="text-3xl font-semibold text-text">{raffle.prizePool} ETH</p>
+              <h1 className="font-display text-2xl sm:text-3xl font-semibold text-text">Prize Pool</h1>
+              <p className="text-2xl sm:text-3xl font-semibold text-text mt-1">{raffle.prizePool} ETH</p>
             </div>
-            <Badge className="border-primary/40 text-primary">{raffle.status}</Badge>
+            <Badge className="border-primary/40 text-primary w-fit">{raffle.status}</Badge>
           </div>
 
           <Card className="glass-card">
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between text-sm text-muted">
+            <CardContent className="space-y-3 sm:space-y-4">
+              <div className="flex items-center justify-between text-xs sm:text-sm text-muted">
                 <span>Ticket price</span>
                 <span className="text-text">{raffle.ticketPrice} ETH</span>
               </div>
-              <div className="flex items-center justify-between text-sm text-muted">
+              <div className="flex items-center justify-between text-xs sm:text-sm text-muted">
                 <span>Participants</span>
                 <span className="text-text">{raffle.participants}</span>
               </div>
-              <div className="flex items-center justify-between text-sm text-muted">
+              <div className="flex items-center justify-between text-xs sm:text-sm text-muted">
                 <span>Time remaining</span>
                 <span className="text-text">
                   <Countdown endsAt={raffle.endsAt} />
@@ -98,13 +98,13 @@ export default function RaffleDetailsPage({ params }: { params: { id: string } }
             <Card className="glass-card">
               <CardContent>
                 <p className="text-xs uppercase tracking-[0.3em] text-muted">Winner</p>
-                <p className="text-lg font-semibold text-text">{formatAddress(raffle.winner)}</p>
+                <p className="text-sm sm:text-lg font-semibold text-text mt-1">{formatAddress(raffle.winner)}</p>
               </CardContent>
             </Card>
           )}
 
           <div>
-            <h2 className="font-display text-xl font-semibold text-text">Participants</h2>
+            <h2 className="font-display text-lg sm:text-xl font-semibold text-text">Participants</h2>
             <div className="mt-4">
               <ParticipantsList participants={participantsQuery.data} />
             </div>
@@ -112,9 +112,9 @@ export default function RaffleDetailsPage({ params }: { params: { id: string } }
         </div>
 
         <Card className="glass-card">
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4 sm:space-y-6">
             <div>
-              <p className="text-sm text-muted">Tickets</p>
+              <p className="text-xs sm:text-sm text-muted">Tickets</p>
               <Input
                 type="number"
                 min={1}
@@ -124,13 +124,14 @@ export default function RaffleDetailsPage({ params }: { params: { id: string } }
                 }
               />
             </div>
-            <div className="flex items-center justify-between text-sm text-muted">
+            <div className="flex items-center justify-between text-xs sm:text-sm text-muted">
               <span>Total cost</span>
               <span className="text-text">{formatToken(totalCost)} ETH</span>
             </div>
             <Button
               onClick={handleEnter}
               disabled={enterMutation.isPending || raffle.status !== "Active"}
+              className="w-full"
             >
               {enterMutation.isPending ? "Waiting for confirmation" : "Enter raffle"}
             </Button>

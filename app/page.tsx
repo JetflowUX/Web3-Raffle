@@ -20,12 +20,12 @@ export default function HomePage() {
     : raffles?.filter(r => r.blockchain === selectedBlockchain) || [];
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-8 sm:space-y-12">
       {/* Hero Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-emerald-500/10 to-transparent border border-primary/30 p-8">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 via-emerald-500/10 to-transparent border border-primary/30 p-6 sm:p-8">
         <div className="relative z-10">
-          <h1 className="text-4xl font-bold text-white mb-2 gradient-text">Welcome to ChainRaffle</h1>
-          <p className="text-lg text-muted">Enter raffles, win big prizes on the blockchain</p>
+          <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2 gradient-text">Welcome to ChainRaffle</h1>
+          <p className="text-sm sm:text-lg text-muted">Enter raffles, win big prizes on the blockchain</p>
         </div>
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl" />
@@ -33,17 +33,17 @@ export default function HomePage() {
 
       {/* Trending Section - Always render to prevent hydration mismatch */}
       <section>
-        <div className="mb-6 flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-primary/20">
+        <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center gap-3">
+          <div className="p-2 rounded-lg bg-primary/20 w-fit">
             <TrendingUp className="h-5 w-5 text-primary" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-white">Trending Raffles</h2>
-            <p className="text-sm text-muted">Most popular draws right now</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">Trending Raffles</h2>
+            <p className="text-xs sm:text-sm text-muted">Most popular draws right now</p>
           </div>
         </div>
         {isLoading || trendingRaffles.length === 0 ? (
-          <div className="grid gap-5 md:grid-cols-3">
+          <div className="grid gap-4 sm:gap-5 md:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className="rounded-lg border border-border bg-card p-6 h-40 animate-pulse">
                 <div className="h-4 bg-white/10 rounded w-20 mb-3" />
@@ -103,10 +103,10 @@ export default function HomePage() {
         </div>
 
         {/* Blockchain Filter Tabs */}
-        <div className="mb-6 flex items-center gap-2 overflow-x-auto pb-2">
+        <div className="mb-4 sm:mb-6 flex items-center gap-2 overflow-x-auto pb-2 -mx-4 sm:mx-0 px-4 sm:px-0">
           <button
             onClick={() => setSelectedBlockchain("All")}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all whitespace-nowrap ${
+            className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all whitespace-nowrap flex-shrink-0 ${
               selectedBlockchain === "All"
                 ? "bg-primary text-black shadow-lg"
                 : "bg-card border border-border text-muted hover:text-white hover:border-primary/30"
@@ -123,14 +123,14 @@ export default function HomePage() {
               <button
                 key={blockchain}
                 onClick={() => setSelectedBlockchain(blockchain)}
-                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2 whitespace-nowrap ${
+                className={`px-3 sm:px-4 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all flex items-center gap-2 whitespace-nowrap flex-shrink-0 ${
                   isSelected
                     ? `${config.bgColor} ${config.borderColor} border text-white shadow-lg`
                     : "bg-card border border-border text-muted hover:text-white hover:border-primary/30"
                 }`}
               >
                 <Icon className="h-4 w-4" />
-                {blockchain}
+                <span className="hidden sm:inline">{blockchain}</span>
               </button>
             );
           })}

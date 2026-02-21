@@ -43,7 +43,7 @@ export function RaffleCard({ raffle }: { raffle: Raffle }) {
             <div className="relative z-10 flex items-start justify-between">
               <div className="space-y-1">
                 <p className="text-white/90 text-xs font-medium uppercase tracking-wide">Prize Pool</p>
-                <p className="text-white text-3xl font-bold drop-shadow-lg">{raffle.prizePool} <span className="text-xl">{blockchainConfig.currency}</span></p>
+                <p className="text-white text-2xl sm:text-3xl font-bold drop-shadow-lg">{raffle.prizePool} <span className="text-sm sm:text-xl">{blockchainConfig.currency}</span></p>
               </div>
               {isActive && (
                 <motion.div 
@@ -89,26 +89,26 @@ export function RaffleCard({ raffle }: { raffle: Raffle }) {
             </div>
 
             {/* Stats */}
-            <div className="space-y-3 mb-4">
-              <div className="stat-row hover:bg-white/5 rounded-md px-2 transition-colors">
+            <div className="space-y-2 mb-4 text-xs sm:text-sm">
+              <div className="stat-row hover:bg-white/5 rounded-md px-2 py-1 transition-colors">
                 <div className="stat-label">
-                  <Ticket className="h-4 w-4 text-primary" />
+                  <Ticket className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
                   <span>Ticket Price</span>
                 </div>
                 <span className="stat-value">{raffle.ticketPrice} {blockchainConfig.currency}</span>
               </div>
               
-              <div className="stat-row hover:bg-white/5 rounded-md px-2 transition-colors">
+              <div className="stat-row hover:bg-white/5 rounded-md px-2 py-1 transition-colors">
                 <div className="stat-label">
-                  <Users className="h-4 w-4 text-primary" />
+                  <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
                   <span>Players</span>
                 </div>
                 <span className="stat-value">{raffle.participants}</span>
               </div>
               
-              <div className="stat-row hover:bg-white/5 rounded-md px-2 transition-colors">
+              <div className="stat-row hover:bg-white/5 rounded-md px-2 py-1 transition-colors">
                 <div className="stat-label">
-                  <Clock className="h-4 w-4 text-primary" />
+                  <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
                   <span>Ends In</span>
                 </div>
                 <Countdown endsAt={raffle.endsAt} />

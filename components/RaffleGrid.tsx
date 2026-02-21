@@ -6,7 +6,7 @@ import { Skeleton } from "./ui/skeleton";
 export function RaffleGrid({ raffles, isLoading }: { raffles?: Raffle[]; isLoading?: boolean }) {
   if (isLoading) {
     return (
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Array.from({ length: 8 }).map((_, index) => (
           <div key={index} className="h-80 rounded-lg bg-card border border-border animate-pulse overflow-hidden">
             <div className="h-32 bg-white/5" />
@@ -34,7 +34,7 @@ export function RaffleGrid({ raffles, isLoading }: { raffles?: Raffle[]; isLoadi
   }
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {raffles.map((raffle) => (
         <RaffleCard key={raffle.id} raffle={raffle} />
       ))}

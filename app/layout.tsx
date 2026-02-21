@@ -27,11 +27,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={`${sora.variable} ${space.variable} ${mono.variable} bg-background text-text antialiased`}
       >
         <Providers>
-          <div className="flex min-h-screen bg-background">
-            <Sidebar />
-            <div className="ml-64 flex-1">
+          <div className="flex min-h-screen flex-col md:flex-row bg-background">
+            <div className="hidden md:block md:fixed md:left-0 md:top-0 md:z-40 md:h-screen md:w-64">
+              <Sidebar />
+            </div>
+            <div className="flex-1 md:ml-64">
               <TopBar />
-              <main className="relative min-h-[calc(100vh-4rem)] p-8">{children}</main>
+              <main className="relative min-h-[calc(100vh-4rem)] p-4 sm:p-6 md:p-8">{children}</main>
             </div>
           </div>
         </Providers>
