@@ -53,6 +53,7 @@ export default function MyTicketsPage() {
         </div>
       ) : (
         <div className="mt-8 grid gap-4 sm:gap-6 xs:grid-cols-1 md:grid-cols-2">
+          {tickets?.map((ticket) => {
             const raffle = raffles?.find((item) => item.id === ticket.raffleId);
             const raffleLink = `/raffle/${ticket.raffleId}`;
             const prizeDisplay = raffle ? formatToken(raffle.prizePool) + " ETH" : "-";

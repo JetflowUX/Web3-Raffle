@@ -1,5 +1,8 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
   "/winners/page": "app/winners/page.js",
-  "/create/page": "app/create/page.js"
+  "/create/page": "app/create/page.js",
+  "/raffle/[id]/page": "app/raffle/[id]/page.js",
+  "/my-tickets/page": "app/my-tickets/page.js"
 }
