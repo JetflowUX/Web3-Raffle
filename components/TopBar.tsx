@@ -1,12 +1,9 @@
 "use client";
 
 import { WalletButton } from "./WalletButton";
-import { useMockMode } from "../hooks/useMockMode";
 import { useRaffles } from "../hooks/useRaffles";
-import { Sparkles, Zap } from "lucide-react";
 
 export function TopBar() {
-  const { useMock, toggleMock } = useMockMode();
   const { data: raffles = [] } = useRaffles();
 
   const totalActiveRaffles = raffles.filter(r => r.status === "Active").length;
@@ -35,18 +32,6 @@ export function TopBar() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          <button
-            onClick={toggleMock}
-            className={`hidden sm:flex items-center gap-2 rounded-lg px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold transition-all ${
-              useMock
-                ? "bg-primary/20 text-primary border border-primary/30 shadow-lg shadow-primary/10"
-                : "text-muted hover:text-white hover:bg-accent border border-transparent"
-            }`}
-          >
-            <Sparkles className="h-4 w-4" />
-            <span className="hidden md:inline">{useMock ? "Mock" : "Live"}</span>
-          </button>
-          
           <div className="h-8 w-px bg-border hidden sm:block" />
           
           <WalletButton />
